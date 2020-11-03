@@ -1,7 +1,6 @@
 from matplotlib import pyplot as plt
 from keras.models import Sequential
 from keras.layers import Conv2D, Dropout, MaxPooling2D, Dense, Flatten
-from keras.optimizers import SGD
 from keras.preprocessing.image import ImageDataGenerator
 
 
@@ -9,13 +8,13 @@ def create_model():
     model = Sequential()
     model.add(Conv2D(32, 3, activation='relu', input_shape=(150, 150, 3)))
     model.add(MaxPooling2D((2, 2)))
-    model.add(Dropout(0.2))
+    model.add(Dropout(0.1))
     model.add(Conv2D(64, 3, activation='relu'))
     model.add(MaxPooling2D((2, 2)))
-    model.add(Dropout(0.2))
+    model.add(Dropout(0.1))
     model.add(Conv2D(128, 3, activation='relu'))
     model.add(MaxPooling2D((2, 2)))
-    model.add(Dropout(0.2))
+    model.add(Dropout(0.1))
     model.add(Flatten())
     model.add(Dense(128, activation='relu'))
     model.add(Dense(1, activation='sigmoid'))
@@ -26,7 +25,7 @@ def create_model():
 
 def fit_model():
     model = create_model()
-    train_datagen = ImageDataGenerator(rescale=1.0/255, width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True, vertical_flip=True)
+    train_datagen = ImageDataGenerator(rescale=1.0/255, width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True)
     val_datagen = ImageDataGenerator(rescale=1.0/255)
 
     train = train_datagen.flow_from_directory('dataset/train/', class_mode='binary', batch_size=64, target_size=(150, 150))
